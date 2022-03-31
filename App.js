@@ -9,9 +9,22 @@ import {
   Dimensions,
   ActivityIndicator,
 } from "react-native";
+import { Fontisto } from "@expo/vector-icons";
 // Dimensions 기계 스크린 width 나 height 얻을 수 있음
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
 const API_KEY = "d790e8a12d0ae64eac3e7fc2a6e73e0c";
+
+const icons = {
+  Clouds: "cloudy",
+  Clear: "day-sunny",
+  Rain: "rain",
+  Atmosphere: "cloudy-gusts",
+  Snow: "snow",
+  Drizzle: "day-rain",
+  Thunderstorm: "lightning",
+};
+
 export default function App() {
   const [city, setCity] = useState("Loading...");
   const [days, setDays] = useState([]);
@@ -54,7 +67,7 @@ export default function App() {
         contentContainerStyle={styles.weather}
       >
         {days.length === 0 ? (
-          <View style={styles.day}>
+          <View style={{ ...styles.day, alignItems: "center" }}>
             <ActivityIndicator
               color="white"
               style={{ marginTop: 10 }}
@@ -64,9 +77,23 @@ export default function App() {
         ) : (
           days.map((day, index) => (
             <View key={index} style={styles.day}>
-              <Text style={styles.temp}>
-                {parseFloat(day.temp.day).toFixed(1)}
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <Text style={styles.temp}>
+                  {parseFloat(day.temp.day).toFixed(1)}
+                </Text>
+                <Fontisto
+                  name={icons[day.weather[0].main]}
+                  size={68}
+                  color="#ecf0f1"
+                />
+              </View>
               <Text style={styles.description}>{day.weather[0].main}</Text>
               <Text style={styles.tinyText}>{day.weather[0].description}</Text>
             </View>
@@ -80,7 +107,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#81ecec",
+    backgroundColor: "#f39c12",
   },
   city: {
     flex: 1.2,
@@ -90,21 +117,24 @@ const styles = StyleSheet.create({
   cityName: {
     fontSize: 68,
     fontWeight: "500",
+    color: "#ecf0f1",
   },
-  weather: {},
   day: {
     width: SCREEN_WIDTH,
-    alignItems: "center",
+    alignItems: "flex-start",
+    paddingHorizontal: 20,
   },
   temp: {
-    marginTop: 50,
-    fontSize: 150,
+    fontSize: 90,
+    color: "#ecf0f1",
   },
   description: {
-    marginTop: -30,
-    fontSize: 60,
+    marginTop: -20,
+    fontSize: 30,
+    color: "#ecf0f1",
   },
   tinyText: {
-    fontSize: 20,
+    fontSize: 15,
+    color: "#ecf0f1",
   },
 });
