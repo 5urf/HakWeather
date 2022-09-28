@@ -1,4 +1,8 @@
-## React Native 101
+## Using & Leaning
+
+- React-Native
+- Expo CLI
+- Open Weather Api
 
 ### 위치 기반 날씨 앱
 
